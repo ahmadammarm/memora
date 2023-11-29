@@ -9,8 +9,8 @@ function Navbar() {
     justify-between p-4 px-8 h-[60px]'>
         <Logo />
         <div className='flex gap-4 items-center'>
-            <UserButton afterSignOutUrl='/' />
             <ThemeSwitcher />
+            <UserButton afterSignOutUrl='/' />
         </div>
     </nav>
   )

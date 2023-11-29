@@ -34,7 +34,7 @@ export default function RootLayout({
         w-full
         flex-col
         items-center
-        dark:bg-neutral-900
+        dark:bg-neutral-950
         '>
           <Navbar />
           <Separator />

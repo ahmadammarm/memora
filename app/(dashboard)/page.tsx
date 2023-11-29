@@ -20,7 +20,7 @@ async function WelcomeMsg(){
   if(!user) {
     return (
       <div>
-        <a href="/sign-in">Sign In</a>
+        erorr
       </div>
     )
   }
