@@ -4,6 +4,7 @@ import { currentUser } from "@clerk/nextjs"
 import { Suspense } from "react";
 import prisma from '../../lib/prisma';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import SadFace from "@/components/icons/SadFace";
 
 export default async function Home() {
   return (
@@ -11,6 +12,10 @@ export default async function Home() {
       <Suspense fallback={<WelcomeMsgFallback />}>
         <WelcomeMsg />
       </Suspense>
+      <Suspense fallback={<div>Loading Collections....</div>}>
+      <CollectionList />
+      </Suspense>
+      
     </>
   )
 }
@@ -27,7 +32,7 @@ async function WelcomeMsg(){
     )
   }
   return (
-    <div className="flex w-full">
+    <div className="flex w-full mb-12">
       <h1 className="text-4xl font-bold">
         Welcome, <br/> {user.firstName} {user.lastName}
       </h1>
@@ -38,7 +43,7 @@ async function WelcomeMsg(){
 
 function WelcomeMsgFallback(){
   return (
-    <div className="flex w-full">
+    <div className="flex w-full mb-12">
       <h1 className="text-4xl font-bold">
         <Skeleton className="w-[180px] h-[36px]" />
         <Skeleton className="w-[150px] h-[36px]" />
@@ -56,9 +61,13 @@ async function CollectionList() {
   });
 
   if(collection.length === 0){
-    <Alert>
+    return (
+      <Alert>
+      <SadFace />
       <AlertTitle>There are No Collections Yet!</AlertTitle>
       <AlertDescription>Create a Collection to Get Started!</AlertDescription>
     </Alert>
+    )
+    
   }
 }
