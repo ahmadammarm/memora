@@ -21,14 +21,14 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-    <html lang="en" className={cn(inter.className, "dark")}
-    style={{
-      colorScheme: "dark",
-    }}
-    >
-      <body >
-        <ThemeProvider>
-        <div className='
+      <html lang="en" className={cn(inter.className, "dark")}
+        style={{
+          colorScheme: "dark",
+        }}
+      >
+        <body >
+          <ThemeProvider>
+            <div className='
         flex
         min-h-screen
         w-full
@@ -36,17 +36,17 @@ export default function RootLayout({
         items-center
         dark:bg-neutral-950
         '>
-          <Navbar />
-          <Separator />
-          <main className='flex flex-grow w-full justify-center
+              <Navbar />
+              <Separator />
+              <main className='flex flex-grow w-full justify-center
           items-center dark:bg-neutral-900
           '>
-          {children}
-          </main>
-        </div>
-        </ThemeProvider>
-      </body>
-    </html>
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
+        </body>
+      </html>
     </ClerkProvider>
   )
 }
