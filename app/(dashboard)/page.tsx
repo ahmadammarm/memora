@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import prisma from '../../lib/prisma';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import SadFace from "@/components/icons/SadFace";
+import CreateCollectionBtn from "@/components/CreateCollectionBtn";
 
 export default async function Home() {
   return (
@@ -13,18 +14,18 @@ export default async function Home() {
         <WelcomeMsg />
       </Suspense>
       <Suspense fallback={<div>Loading Collections....</div>}>
-      <CollectionList />
+        <CollectionList />
       </Suspense>
-      
+
     </>
   )
 }
 
-async function WelcomeMsg(){
+async function WelcomeMsg() {
   const user = await currentUser();
   await wait(2000);
 
-  if(!user) {
+  if (!user) {
     return (
       <div>
         erorr
@@ -34,14 +35,14 @@ async function WelcomeMsg(){
   return (
     <div className="flex w-full mb-12">
       <h1 className="text-4xl font-bold">
-        Welcome, <br/> {user.firstName} {user.lastName}
+        Welcome, <br /> {user.firstName} {user.lastName}
       </h1>
     </div>
-    
+
   )
 }
 
-function WelcomeMsgFallback(){
+function WelcomeMsgFallback() {
   return (
     <div className="flex w-full mb-12">
       <h1 className="text-4xl font-bold">
@@ -60,14 +61,17 @@ async function CollectionList() {
     }
   });
 
-  if(collection.length === 0){
+  if (collection.length === 0) {
     return (
-      <Alert>
-      <SadFace />
-      <AlertTitle>There are No Collections Yet!</AlertTitle>
-      <AlertDescription>Create a Collection to Get Started!</AlertDescription>
-    </Alert>
+      <div className="flex flex-col gap-5">
+        <Alert>
+          <SadFace />
+          <AlertTitle>There are No Collections Yet!</AlertTitle>
+          <AlertDescription>Create a Collection to Get Started!</AlertDescription>
+        </Alert>
+        <CreateCollectionBtn />
+      </div>
     )
-    
+
   }
 }
