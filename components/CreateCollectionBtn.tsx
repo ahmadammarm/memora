@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react'
 import { Button } from './ui/button'
+import CreateCollectionSheet from './CreateCollectionSheet'
 
 function CreateCollectionBtn() {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(true)
     const handleOpenChange = (open:boolean) => setOpen(open)
   return (
     <div className='w-full rounded-md bg-gradient-to-r from-red-700 via-pink-700 to-yellow-500 p-[1px]'>
@@ -17,7 +18,7 @@ function CreateCollectionBtn() {
         bg-clip-text text-transparent
         '>Create a Collection</span>
     </Button>
-    <CreateCollectionSheet/>
+    <CreateCollectionSheet open={open} onOpenChange={handleOpenChange} />
     </div>
     
   )
