@@ -6,10 +6,14 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collap
 import { Button } from './ui/button';
 import { CollectionColor, CollectionColors } from '@/lib/constants';
 import { cn } from '@/lib/utils';
-import { CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons';
+import { CaretDownIcon, CaretUpIcon, TrashIcon } from '@radix-ui/react-icons';
 import { Progress } from './ui/progress';
 import { Separator } from './ui/separator';
 import Plus from './icons/Plus';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogTitle, AlertDialogTrigger } from './ui/alert-dialog';
+import { deleteCollection } from '@/actions/collection';
+import { toast } from './ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     collection: Collection;
@@ -21,6 +25,25 @@ const tasks: string[] = [
 
 function CollectionCard({collection}: Props) {
     const [isOpen, setIsOpen] = useState(true)
+    const router = useRouter()
+
+    const removeCollection = async () => {
+        try {
+            await deleteCollection(collection.id)
+            toast({
+                title: "Collection deleted",
+                description: "Collection has been deleted successfully",
+            })
+            router.refresh()
+        } catch(e) {
+            toast({
+                title: "Error",
+                description: "Cannot delete the collection",
+                variant: "destructive",
+            })
+        }
+        
+    }
 
     return (    
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -62,6 +85,30 @@ function CollectionCard({collection}: Props) {
                             <Button size={"icon"} variant={"ghost"}>
                                 <Plus/>
                             </Button>
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                <Button size={"icon"} variant={"ghost"}>
+                                <TrashIcon/>
+                            </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogTitle>
+                                        Are you sure to delete this collection?
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action cannot be undone and will permanently delete this collection.
+                                    </AlertDialogDescription>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction
+                                        onClick={() => {
+                                            removeCollection()
+                                        }}
+                                        >Delete</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                            
                         </div>
                     </footer>
             </CollapsibleContent>
