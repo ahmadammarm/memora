@@ -87,7 +87,7 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
                                     <FormLabel>Color</FormLabel>
                                     <FormControl>
                                         <Select onValueChange={(color) => field.onChange(color)}>
-                                            <SelectTrigger className={cn("w-full h-8 text-white", CollectionColors[field.value as CollectionColor])}>
+                                            <SelectTrigger className={cn("w-full h-8", CollectionColors[field.value as CollectionColor])}>
                                                 <SelectValue placeholder="Color" className="w-full h-8" />
                                             </SelectTrigger>
                                             <SelectContent className='w-full'>
@@ -95,9 +95,7 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
                                                     <SelectItem
                                                         key={color}
                                                         value={color}
-                                                        className={cn(`w-full h-8 rounded-md my-1 text-white focus:text-white focus:font-bold focus:ring-2 ring-neutral-700 focus:ring-inset dark:focus:ring-white
-                                            focus:px-8
-                                            `, CollectionColors[color as CollectionColor])}
+                                                        className={cn(`w-full h-8 rounded-md my-1 `, CollectionColors[color as CollectionColor])}
                                                     >{color}</SelectItem>
                                                 ))}
                                             </SelectContent>

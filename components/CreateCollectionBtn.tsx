@@ -11,7 +11,7 @@ function CreateCollectionBtn() {
         <div className='w-full rounded-md bg-gradient-to-r from-violet-700 via-pink-700 to-purple-500 p-[1px]'>
             <Button
                 variant={"outline"}
-                className='dark:text-white w-full dark:bg-neutral-950 bg-white'
+                className=' w-full dark:bg-neutral-950 bg-white'
                 onClick={() => setOpen(true)}
             >
                 <span className='bg-gradient-to-r from-violet-700 to-purple-700

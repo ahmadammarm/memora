@@ -23,7 +23,9 @@ function CollectionCard({collection}: Props) {
                 CollectionColors[collection.color as CollectionColor]
                 )}
                 >
-                    <span className='text-white font-bold'>{collection.name}</span>
+                    <span className='
+                    dark:text-white text-black
+                    font-bold'>{collection.name}</span>
                     {!isOpen && <CaretDownIcon className='h-6 w-6' />}
                     {isOpen && <CaretUpIcon className="h-6 w-6" />}
                 </Button>
