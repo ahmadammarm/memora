@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useTransition } from 'react'
 import { Collection } from '@prisma/client'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import { Button } from './ui/button';
@@ -26,6 +26,8 @@ const tasks: string[] = [
 function CollectionCard({collection}: Props) {
     const [isOpen, setIsOpen] = useState(true)
     const router = useRouter()
+
+    const [isLoading, startTransition] = useTransition()
 
     const removeCollection = async () => {
         try {
@@ -81,7 +83,9 @@ function CollectionCard({collection}: Props) {
                         <p>
                             Created at : {collection.createdAt.toDateString()}
                         </p>
-                        <div>
+                        {isLoading && <div>Deleting...</div>}
+                        {!isLoading && (
+                            <div>
                             <Button size={"icon"} variant={"ghost"}>
                                 <Plus/>
                             </Button>
@@ -102,14 +106,14 @@ function CollectionCard({collection}: Props) {
                                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                                         <AlertDialogAction
                                         onClick={() => {
-                                            removeCollection()
+                                            startTransition(removeCollection)
                                         }}
                                         >Delete</AlertDialogAction>
                                     </AlertDialogFooter>
                                 </AlertDialogContent>
                             </AlertDialog>
-                            
                         </div>
+                        )}
                     </footer>
             </CollapsibleContent>
         </Collapsible>
