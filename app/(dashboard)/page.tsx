@@ -6,6 +6,7 @@ import prisma from '../../lib/prisma';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import SadFace from "@/components/icons/SadFace";
 import CreateCollectionBtn from "@/components/CreateCollectionBtn";
+import CollectionCard from "@/components/CollectionCard";
 
 export default async function Home() {
   return (
@@ -74,11 +75,13 @@ async function CollectionList() {
   }
 
   return (
-    <div>
+    <>
       <CreateCollectionBtn />
+      <div className="flex flex-col gap-4 mt-6">
       {collection.map(collection => (
         <CollectionCard key={collection.id} collection={collection} />
       ))}
-    </div>
+      </div>
+    </>
   )
 }
