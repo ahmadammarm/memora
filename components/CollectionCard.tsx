@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useTransition } from 'react'
-import { Collection } from '@prisma/client'
+import { Collection, Task } from '@prisma/client'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import { Button } from './ui/button';
 import { CollectionColor, CollectionColors } from '@/lib/constants';
@@ -14,20 +14,24 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { deleteCollection } from '@/actions/collection';
 import { toast } from './ui/use-toast';
 import { useRouter } from 'next/navigation';
+import CreateTaskDialog from './CreateTaskDialog';
 
 interface Props {
-    collection: Collection;
+    collection: Collection & {
+        tasks: Task[]
+    };
 }
 
-const tasks: string[] = [
-    "task 2"
-]
 
 function CollectionCard({collection}: Props) {
     const [isOpen, setIsOpen] = useState(true)
     const router = useRouter()
 
+    const [showCreateTask, setShowCreateTask] = useState(false)
+
     const [isLoading, startTransition] = useTransition()
+
+    const tasks = collection.tasks
 
     const removeCollection = async () => {
         try {
@@ -48,6 +52,12 @@ function CollectionCard({collection}: Props) {
     }
 
     return (    
+        <>
+        <CreateTaskDialog
+        open={showCreateTask}
+        setOpen={setShowCreateTask}
+        collection={collection}
+        />
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>
                 <Button variant={"ghost"}
@@ -71,7 +81,7 @@ function CollectionCard({collection}: Props) {
                             <Progress className='rounded-none' value={45} />
                             <div className='p-4 gap-3 flex flex-col'>
                                 {tasks.map((task) => (
-                                    <div>Mocked Task</div>
+                                    <div key={task.id}>{task.content}</div>
                                 ))}
                             </div>
                         </>
@@ -86,7 +96,7 @@ function CollectionCard({collection}: Props) {
                         {isLoading && <div>Deleting...</div>}
                         {!isLoading && (
                             <div>
-                            <Button size={"icon"} variant={"ghost"}>
+                            <Button size={"icon"} variant={"ghost"} onClick={() => setShowCreateTask(true)}>
                                 <Plus/>
                             </Button>
                             <AlertDialog>
@@ -117,6 +127,7 @@ function CollectionCard({collection}: Props) {
                     </footer>
             </CollapsibleContent>
         </Collapsible>
+        </>
     )
 
 }

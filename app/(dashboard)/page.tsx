@@ -17,7 +17,6 @@ export default async function Home() {
       <Suspense fallback={<div>Loading Collections....</div>}>
         <CollectionList />
       </Suspense>
-
     </>
   )
 }
@@ -56,6 +55,9 @@ function WelcomeMsgFallback() {
 async function CollectionList() {
   const user = await currentUser();
   const collection = await prisma.collection.findMany({
+    include: {
+      tasks: true,
+    },
     where: {
       userId: user?.id,
     }
