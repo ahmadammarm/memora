@@ -3,6 +3,7 @@
 import { CreateCollectionSchemaType } from "@/schema/createCollection";
 import { currentUser } from "@clerk/nextjs";
 import prisma from '../lib/prisma';
+import { wait } from "@/lib/wait";
 
 export async function createCollection(form: CreateCollectionSchemaType){
     const user = await currentUser()

@@ -38,7 +38,6 @@ async function WelcomeMsg() {
         Hello, <br /> {user.firstName} {user.lastName}
       </h1>
     </div>
-
   )
 }
 
@@ -72,6 +71,14 @@ async function CollectionList() {
         <CreateCollectionBtn />
       </div>
     )
-
   }
+
+  return (
+    <div>
+      <CreateCollectionBtn />
+      {collection.map(collection => (
+        <CollectionCard key={collection.id} collection={collection} />
+      ))}
+    </div>
+  )
 }

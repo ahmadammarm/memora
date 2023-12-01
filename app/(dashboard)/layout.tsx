@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import React, { ReactNode } from "react";
 
 function layout({ children }: { children: ReactNode }) {
@@ -9,6 +10,7 @@ function layout({ children }: { children: ReactNode }) {
       <div className="flex flex-grow w-full justify-center dark:bg-netrual-950">
         <div className="max-w-[920px] flex flex-col flex-grow px-4 py-12">
           {children}
+          <Toaster />
         </div>
       </div>
     </div>

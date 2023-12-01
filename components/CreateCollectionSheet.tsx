@@ -11,6 +11,9 @@ import { cn } from '@/lib/utils';
 import { Separator } from './ui/separator';
 import { Button } from './ui/button';
 import { createCollection } from '@/actions/collection';
+import { toast } from './ui/use-toast';
+import { ReloadIcon } from '@radix-ui/react-icons';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     open: boolean;
@@ -23,11 +26,25 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
         defaultValues: {},
     })
 
+    const router = useRouter()
+
     const onSubmit = async (data: CreateCollectionSchemaType) => {
         try {
-            await createCollection(data)    
+            await createCollection(data);
+
+            openChangeWrapper(false)
+            router.refresh()
+            
+            toast({
+                title: 'Success',
+                description: "Collection created successfully",
+            })
         } catch(e) {
-            alert("Error creating collection")
+            toast({
+                title: 'Error',
+                description: "Something went wrong",
+                variant: 'destructive',
+            })
         }
     }
 
@@ -95,7 +112,11 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
                 </Form>
                 <div className='flex flex-col gap-4 mt-4'>
                     <Separator />
-                    <Button onClick={form.handleSubmit(onSubmit)}>Confirm</Button>
+                    <Button disabled={form.formState.isSubmitting} onClick={form.handleSubmit(onSubmit)}>Confirm
+                    {form.formState.isSubmitting && (
+                        <ReloadIcon className="ml-2 w-5 h-5 animate-spin" />
+                    )}
+                    </Button>
                 </div>
             </SheetContent>
         </Sheet>
