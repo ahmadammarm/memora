@@ -9,7 +9,7 @@ import {
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { CollectionColor, CollectionColors } from "@/lib/constants";
-import { CaretDownIcon, CaretUpIcon, ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
+import { CaretDownIcon, CaretUpIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Progress } from "./ui/progress";
 import { Separator } from "./ui/separator";
 import Plus from "./icons/Plus";
@@ -50,13 +50,13 @@ function CollectionCard({ collection }: Props) {
       await deleteCollection(collection.id);
       toast({
         title: "Success",
-        description: "Collection Deleted Successfully",
+        description: "Collection deleted successfully",
       });
       router.refresh();
     } catch (e) {
       toast({
         title: "Error",
-        description: "Cannot Delete Collection",
+        description: "Cannot delete collection",
         variant: "destructive",
       });
     }
@@ -123,7 +123,7 @@ function CollectionCard({ collection }: Props) {
           )}
           <Separator />
           <footer className="h-[40px] px-4 p-[2px] text-xs text-neutral-500 flex justify-between items-center ">
-            <p>Created at {collection.createdAt.toDateString()}</p>
+            <p>Created at {collection.createdAt.toLocaleDateString("en-US")}</p>
             {isLoading && <div>Deleting...</div>}
             {!isLoading && (
               <div>
@@ -142,11 +142,11 @@ function CollectionCard({ collection }: Props) {
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogTitle>
-                      Are you sure you want to delete this collection?
+                      Are you absolutely sure?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone. This will permanently delete
-                      your collection.
+                      your collection and all tasks inside it.
                     </AlertDialogDescription>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -155,7 +155,7 @@ function CollectionCard({ collection }: Props) {
                           startTransition(removeCollection);
                         }}
                       >
-                        Delete
+                        Proceed
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

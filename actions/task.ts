@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import {prisma} from "@/lib/prisma";
 import { createTaskSchemaType } from "@/schema/createTask";
 import { currentUser } from "@clerk/nextjs";
 
