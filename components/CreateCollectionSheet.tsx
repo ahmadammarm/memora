@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './ui/sheet';
 import { useForm } from 'react-hook-form';
-import { CreateCollectionSchemaType, createCollectionSchema } from '../schema/createCollection';
+import { createCollectionSchemaType, createCollectionSchema } from '../schema/createCollection';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Input } from './ui/input';
@@ -21,14 +21,14 @@ interface Props {
 }
 
 function CreateCollectionSheet({ open, onOpenChange }: Props) {
-    const form = useForm<CreateCollectionSchemaType>({
+    const form = useForm<createCollectionSchemaType>({
         resolver: zodResolver(createCollectionSchema),
         defaultValues: {},
     })
 
     const router = useRouter()
 
-    const onSubmit = async (data: CreateCollectionSchemaType) => {
+    const onSubmit = async (data: createCollectionSchemaType) => {
         try {
             await createCollection(data);
 
